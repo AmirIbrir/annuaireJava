@@ -4,9 +4,25 @@ public class Contact {
 	
 	private String lastName;
 	private String firstName;
-	private Long phoneNumber;
+	private String phoneNumber;
 	
 	
+	public Contact(String lastName, String firstName, String phoneNumber) {
+		super();
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.phoneNumber = phoneNumber;
+	}
+	
+	
+	
+	@Override
+	public String toString() {
+		return "Contact [lastName=" + lastName + ", firstName=" + firstName + ", phoneNumber=" + phoneNumber + "]";
+	}
+
+
+
 	public String getLastName() {
 		return lastName;
 	}
@@ -19,10 +35,10 @@ public class Contact {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	public Long getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
-	public void setPhoneNumber(Long phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 	
