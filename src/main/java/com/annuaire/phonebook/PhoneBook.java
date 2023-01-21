@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class PhoneBook {
 
+	public static final String PHONE_BOOK_FILE_PATH = "/Users/amiroucheibrir/Documents/phonebook.txt";
 	public static Scanner sc = null;
 
 	public static void main(String[] args) {
@@ -26,24 +27,13 @@ public class PhoneBook {
 		System.out.println(userlastName);
 		System.out.println(userPhoneNumber);
 		*/
-		//System.out.println(newContact.toString());
+		System.out.println(newContact.toString());
+		
+		File phoneBookFile = getOrCreatePhoneBookFile(PHONE_BOOK_FILE_PATH);
 
-		File phoneBookFile = new File("/Users/amiroucheibrir/Documents/phonebook.txt");
 		
-		if (phoneBookFile.exists()) {
-			System.out.println("Fichier existe");
-		}else {
-			System.out.println("Fichier n'existe pas");
-		}
+		appendContactToPhoneBook(phoneBookFile, newContact);
 		
-		try {
-			BufferedWriter fileWriter = new BufferedWriter(new FileWriter(phoneBookFile, true));
-			fileWriter.append(newContact.toString());
-			fileWriter.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		sc.close();
 
@@ -53,5 +43,36 @@ public class PhoneBook {
 		System.out.println(userRequest);
 		return sc.nextLine();
 	}
-
+	
+	public static File getOrCreatePhoneBookFile(String phoneBookFilePath) {
+		File phoneBookFile = new File(phoneBookFilePath);
+		
+		if (phoneBookFile.exists()) {
+			return phoneBookFile;
+		}
+			System.out.println("Fichier n'existe pas(" + phoneBookFilePath + ")");
+			try {
+				phoneBookFile.createNewFile();
+				System.out.println("Le fichier a été crée(" + phoneBookFilePath + ")");
+				return phoneBookFile;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		return null;
+		
+	}
+	
+	public static void appendContactToPhoneBook(File phoneBookFile, Contact newContact) {
+		try(BufferedWriter fileWriter = new BufferedWriter(new FileWriter(phoneBookFile, true))){
+			
+			fileWriter.append(newContact.toString() + '\n');
+			System.out.println("Contact ajouté");
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
